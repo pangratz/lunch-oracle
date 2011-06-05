@@ -1,0 +1,1 @@
+Java application to help Students at JKU with the decision where to have lunch. If invoked without arguments then a predefined list of restaurants near the campus of the JKU is chosen by the "Oracle". However, if none of the predefined places fits your needs (or taste), alternative places can be passed as arguments, from which one is then chosen by the "Oracle".
