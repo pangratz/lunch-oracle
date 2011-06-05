@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Oracle {
 
 	private enum Restaurant {
@@ -8,10 +6,7 @@ public class Oracle {
 
 	public static void main(String[] args) {
 
-		Random r = new Random();
-		Restaurant[] restaurantos = Restaurant.values();
-
-		Restaurant chosenEatingThing = restaurantos[r.nextInt(restaurantos.length)];
+		Restaurant chosenEatingThing = Restaurant.A2ChinaRestaurant;
 
 		System.out.println("Today's best choice is: " + chosenEatingThing.name());
 
