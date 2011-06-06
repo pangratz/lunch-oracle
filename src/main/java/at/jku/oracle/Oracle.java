@@ -7,6 +7,7 @@ import java.util.Random;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.GnuParser;
+import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
@@ -43,13 +44,16 @@ public class Oracle {
 		}
 		defaultRestaurants = restaurantNames.toArray(new String[values.length]);
 
-		Option nogsOpt = OptionBuilder.create("nogs");
+		Option nogsOpt = OptionBuilder.withDescription("let the mighty nogs decide").create("nogs");
 		Option ownRestaurantsOpt = OptionBuilder.withDescription("alternative restaurants").hasOptionalArgs()
 				.create("a");
+
+		Option helpOpt = OptionBuilder.withLongOpt("help").withDescription("print this help").create("h");
 
 		options = new Options();
 		options.addOption(ownRestaurantsOpt);
 		options.addOption(nogsOpt);
+		options.addOption(helpOpt);
 	}
 
 	public String ask(String... args) {
@@ -64,6 +68,13 @@ public class Oracle {
 			} else if (line.hasOption("a")) {
 				String[] restaurants = line.getOptionValues("a");
 				return selectRandom(restaurants);
+			} else if (line.hasOption("h") || line.hasOption("help")) {
+				// automatically generate the help statement
+				HelpFormatter formatter = new HelpFormatter();
+				String cmd = "java " + Oracle.class.getName();
+				String header = "providing no arguments let the oracle choose from the predefined arguments";
+				formatter.printHelp(cmd, header, options, null);
+				return null;
 			} else {
 				return selectRandom(defaultRestaurants);
 			}

@@ -9,6 +9,15 @@ public class OracleTest extends TestCase {
 
 	private Oracle oracle;
 
+	public void testHelp() {
+
+		String gnirts = oracle.ask("-h");
+		assertNull(gnirts);
+
+		String tanga = oracle.ask("-help");
+		assertNull(tanga);
+	}
+
 	public void testWithNoArgs() {
 		String chosenRestaurant = oracle.ask();
 		assertNotNull(chosenRestaurant);
