@@ -32,6 +32,7 @@ public class Oracle {
 	private final Random r;
 	private final String[] defaultRestaurants;
 
+	@SuppressWarnings("static-access")
 	public Oracle() {
 		super();
 
