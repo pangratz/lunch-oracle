@@ -32,6 +32,10 @@ public class Oracle {
 	private final Random r;
 	private final String[] defaultRestaurants;
 
+	private final Option nogsOpt;
+	private final Option ownRestaurantsOpt;
+	private final Option helpOpt;
+
 	@SuppressWarnings("static-access")
 	public Oracle() {
 		super();
@@ -45,11 +49,9 @@ public class Oracle {
 		}
 		defaultRestaurants = restaurantNames.toArray(new String[values.length]);
 
-		Option nogsOpt = OptionBuilder.withDescription("let the mighty nogs decide").create("nogs");
-		Option ownRestaurantsOpt = OptionBuilder.withDescription("alternative restaurants").hasOptionalArgs()
-				.create("a");
-
-		Option helpOpt = OptionBuilder.withLongOpt("help").withDescription("print this help").create("h");
+		nogsOpt = OptionBuilder.withDescription("let the mighty nogs decide").create("nogs");
+		ownRestaurantsOpt = OptionBuilder.withDescription("alternative restaurants").hasOptionalArgs().create("a");
+		helpOpt = OptionBuilder.withLongOpt("help").withDescription("print this help").create("h");
 
 		options = new Options();
 		options.addOption(ownRestaurantsOpt);
@@ -64,12 +66,12 @@ public class Oracle {
 			// parse the command line arguments
 			CommandLine line = parser.parse(options, args);
 
-			if (line.hasOption("nogs")) {
+			if (line.hasOption(nogsOpt.getOpt())) {
 				return Restaurant.A2ChinaRestaurant.name();
-			} else if (line.hasOption("a")) {
-				String[] restaurants = line.getOptionValues("a");
+			} else if (line.hasOption(ownRestaurantsOpt.getOpt())) {
+				String[] restaurants = line.getOptionValues(ownRestaurantsOpt.getOpt());
 				return selectRandom(restaurants);
-			} else if (line.hasOption("h") || line.hasOption("help")) {
+			} else if (line.hasOption(helpOpt.getOpt()) || line.hasOption(helpOpt.getLongOpt())) {
 				// automatically generate the help statement
 				HelpFormatter formatter = new HelpFormatter();
 				String cmd = "java " + Oracle.class.getName();
